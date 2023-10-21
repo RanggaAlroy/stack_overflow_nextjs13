@@ -20,6 +20,8 @@ import React, { useRef, useState } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 import { Badge } from '../ui/badge';
 import Image from 'next/image';
+import { create } from 'domain';
+import { createQuestion } from '@/lib/actions/question.action';
 
 const type: any = 'create';
 
@@ -37,12 +39,14 @@ const Question = () => {
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof QuestionsSchema>) {
+  async function onSubmit(values: z.infer<typeof QuestionsSchema>) {
     setIsSubmitting(true);
 
     try {
       // 1. Make an async call to your API -> create a question
       // contains all from data
+      await createQuestion({});
+
       // navigate to home page
     } catch (error) {
     } finally {
@@ -126,6 +130,8 @@ const Question = () => {
                     // @ts-ignore
                     editorRef.current = editor;
                   }}
+                  onBlur={field.onBlur}
+                  onEditorChange={content => field.onChange(content)}
                   initialValue=""
                   init={{
                     height: 350,
