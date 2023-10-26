@@ -7,45 +7,12 @@ import Filter from '@/components/shared/Filter';
 import HomePageFilter from '@/components/home/HomePageFilter';
 import NoResult from '@/components/shared/NoResult';
 import QuestionCard from '@/components/shared/card/QuestionCard';
+import { getQuestions } from '@/lib/actions/question.action';
 
-const questions = [
-  {
-    _id: '1',
-    title: 'Cascading Deletes in SQLAlchemy?',
-    tags: [
-      { _id: '1', name: 'python' },
-      { _id: '2', name: 'sql' },
-    ],
-    author: {
-      _id: '1',
-      name: 'John Doe',
-      picture: 'john-doe.jpg',
-    },
-    upvotes: 1000000,
-    views: 500000,
-    answer: [],
-    createdAt: new Date('2021-09-01T12:00:00.000Z'),
-  },
-  {
-    _id: '2',
-    title: 'How to center a div?',
-    tags: [
-      { _id: '3', name: 'css' },
-      { _id: '2', name: 'sql' },
-    ],
-    author: {
-      _id: '1',
-      name: 'John Doe',
-      picture: 'john-doe.jpg',
-    },
-    upvotes: 1000,
-    views: 5000,
-    answer: [],
-    createdAt: new Date('2021-09-01T12:00:00.000Z'),
-  },
-];
+export default async function Home() {
+  const result = await getQuestions({});
+  console.log(result.questions);
 
-export default function Home() {
   return (
     <>
       <div className="flex w-full justify-between gap-4 sm:flex-row sm:items-center">
@@ -73,8 +40,8 @@ export default function Home() {
       <HomePageFilter />
       <div className="mt-10 flex w-full flex-col gap-6">
         {/* Looping through question */}
-        {questions.length > 0 ? (
-          questions.map(question => (
+        {result.questions.length > 0 ? (
+          result.questions.map(question => (
             <QuestionCard
               key={question._id}
               _id={question._id}
@@ -83,7 +50,7 @@ export default function Home() {
               author={question.author}
               upvotes={question.upvotes}
               views={question.views}
-              answer={question.answer}
+              answers={question.answer}
               createdAt={question.createdAt}
             />
           ))

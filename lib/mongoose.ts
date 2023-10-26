@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 let isConnected: boolean = false;
 
 export const connectToDatabase = async () => {
-    mongoose.set('strictQuery', true);
+    mongoose.set('strictQuery', true); // to avoid deprecation warning
 
     if(!process.env.MONGODB_URL) {
         return console.log('MISSING MONGODB_URL')

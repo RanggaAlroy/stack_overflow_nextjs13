@@ -5,7 +5,9 @@ import { getUserById } from '@/lib/actions/user.action';
 import { auth } from '@clerk/nextjs';
 
 const Page = async () => {
-  const { userId } = auth();
+  // const { userId } = auth();
+
+  const userId = '5f83c9a3a08b540b38e9684f';
 
   if (!userId) redirect('/login');
 
